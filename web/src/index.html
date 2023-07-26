@@ -1,15 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap w/ Vite</title>
-  </head>
-  <body>
-    <div class="container py-4 px-3 mx-auto">
-      <h1>Hello, Bootstrap and Vite!</h1>
-      <button class="btn btn-primary">Primary button</button>
-    </div>
-    <script type="module" src="./js/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spring rest only vs spring rest + rabbitmq processing</title>
+</head>
+
+<body>
+  <div class="container py-4 px-3 mx-auto text-center">
+    <header>
+      <h1 class="mb-5">Spring rest only vs spring rest + rabbitmq processing</h1>
+
+      <form class="form-inline mb-3">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label class="form-label" for="requests-number">Number of requests:</label>
+          </div>
+          <div class="col-auto">
+            <input id="requests-number" class="form-control" type="number" value="640" min="0" />
+          </div>
+
+          <div class="col-auto">
+            <label class="form-label" for="requests-number">Parallel processing:</label>
+          </div>
+          <div class="col-auto">
+            <input id="requests-number" class="form-control" type="number" value="10" min="0" />
+          </div>
+
+          <div class="col-auto">
+            <label class="form-label" for="requests-number">Endpoint:</label>
+          </div>
+          <div class="col-auto">
+            <input id="requests-number" class="form-control" type="text" value="http://localhost:8080/api/time-registry" min="0" />
+          </div>
+        </div>
+      </form>
+
+      <button class="btn btn-primary">START</button>
+
+      <hr />
+    </header>
+
+    <section>
+      <h2>Spring rest only</h2>
+      <div class="processing-area"></div>
+
+      <hr />
+
+      <h2>Spring rest only + parallel processing</h2>
+      <div class="processing-area"></div>
+
+      <hr />
+      <h2>Spring rest + rabbitmq</h2>
+      <div class="processing-area"></div>
+
+      <hr />
+      <h2>Spring rest + rabbitmq + parallel processing</h2>
+      <div class="processing-area"></div>
+    </section>
+
+  </div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+
 </html>

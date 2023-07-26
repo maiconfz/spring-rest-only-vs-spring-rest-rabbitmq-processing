@@ -1,0 +1,50 @@
+$square-dimension: 15px;
+$square-dimension-sm: 5px;
+$square-dimension-lg: 25px;
+
+$square-bg-color-default: rgb(238, 238, 238);
+$square-bg-color-processing: rgb(47, 144, 255); 
+
+.processing-area {
+
+    line-height: 0;
+
+    .square {
+        display: inline-block;
+        margin: 0 1px 1px 0;
+        width: $square-dimension;
+        height: $square-dimension;
+        background-color: $square-bg-color-default;
+        border: 1px solid rgba(204, 204, 204, 0.8);
+    }
+
+    .square.square-sm {
+        width: $square-dimension-sm;
+        height: $square-dimension-sm;
+    }
+
+    .square.square-lg {
+        width: $square-dimension-lg;
+        height: $square-dimension-lg;
+    }
+
+    @keyframes processing-color-change {
+        from {background-color: $square-bg-color-default;}
+        to {background-color: $square-bg-color-processing;}
+    }
+
+    .square.processing {
+        border: 1px solid rgba(204, 204, 204, 0.4);
+        background-color: $square-bg-color-processing;
+        animation-name: processing-color-change;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+        animation-direction: alternate;
+    }
+
+    .square.success {
+        border: 1px solid rgba(204, 204, 204, 0.4);
+        background-color: rgb(62, 182, 88);
+    }
+}
