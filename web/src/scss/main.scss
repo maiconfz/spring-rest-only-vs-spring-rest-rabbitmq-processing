@@ -47,4 +47,9 @@ $square-bg-color-processing: rgb(47, 144, 255);
         border: 1px solid rgba(204, 204, 204, 0.4);
         background-color: rgb(62, 182, 88);
     }
+
+    .square.fail {
+        border: 1px solid rgba(204, 204, 204, 0.4);
+        background-color: rgb(226, 81, 81);
+    }
 }
