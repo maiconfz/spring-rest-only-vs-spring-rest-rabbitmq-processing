@@ -1,0 +1,12 @@
+{
+  "name": "spring-rest-only-vs-spring-rest-rabbitmq-processing",
+  "version": "1.0.0",
+  "repository": "git@github.com:maiconfz/spring-rest-only-vs-spring-rest-rabbitmq-processing.git",
+  "author": "Maiconfz <maiconfz@gmail.com>",
+  "license": "UNLICENSED",
+
+  "scripts": {
+    "start-api": "./gradlew :api:bootRun",
+    "start-web": "vite web"
+  }
+}
