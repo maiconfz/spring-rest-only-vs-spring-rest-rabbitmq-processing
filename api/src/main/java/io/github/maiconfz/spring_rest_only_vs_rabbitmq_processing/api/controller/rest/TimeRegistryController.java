@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.ImmutableSet;
 
 @RestController
-@RequestMapping(path = "/time-registries")
+@RequestMapping(path = "/api/time-registries")
 public class TimeRegistryController {
 
     @GetMapping(path = "")
