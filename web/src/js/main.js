@@ -2,23 +2,30 @@ import '../scss/styles.scss';
 
 import $ from 'jquery';
 import { drawSquare } from './draw-square';
+import { SpringRestOnlyParallelProcessor } from './processor/SpringRestOnlyParallelProcessor';
 import { SpringRestOnlyProcessor } from './processor/SpringRestOnlyProcessor';
 
 window.jQuery = window.$ = $;
 
 $(() => {
 
-  let $requestsNumber = $('input#requests-number');
+  let inputs = {
+    $requestsNumber: $('input#requests-number'),
+    $parallelProcessingNumber: $('input#requests-parallel-number'),
+    $endpoint: $('input#requests-endpoint')
+
+  }
+
   let $processingAreas = $('.processing-area');
 
-  drawSquare($processingAreas, $requestsNumber.val());
+  drawSquare($processingAreas, inputs.$requestsNumber.val());
 
   let resetSquares = () => {
     $processingAreas.empty();
-    drawSquare($('.processing-area'), $requestsNumber.val());
+    drawSquare($('.processing-area'), inputs.$requestsNumber.val());
   };
 
-  $requestsNumber.on('change', resetSquares).on('keyup', resetSquares);
+  inputs.$requestsNumber.on('change', resetSquares).on('keyup', resetSquares);
 
 
   let $btnStart = $('button#btn-start');
@@ -29,7 +36,9 @@ $(() => {
     resetSquares();
 
     new SpringRestOnlyProcessor($('#spring-rest-only-processing-area')).process().always(() => {
-      $('button, input').prop('disabled', false);
+      new SpringRestOnlyParallelProcessor($('#spring-rest-only-parallel-processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val())).process().always(() => {
+        $('button, input').prop('disabled', false);
+      });
     });
   });
 
