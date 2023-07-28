@@ -18,7 +18,7 @@
             <label class="form-label" for="requests-number">Number of requests:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-number" class="form-control" type="number" value="640" min="0" />
+            <input id="requests-number" class="form-control" type="number" value="640" min="1" />
           </div>
 
           <div class="col-auto">
@@ -32,19 +32,21 @@
             <label class="form-label" for="requests-number">Endpoint:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-number" class="form-control" type="text" value="http://localhost:8080/api/time-registry" min="0" />
+            <input id="requests-number" class="form-control" type="text" value="http://localhost:8080/api/time-registry" />
           </div>
         </div>
       </form>
 
-      <button class="btn btn-primary">START</button>
+      <button id="btn-start" class="btn btn-primary btn-action">START</button>
+
+      <button id="btn-reset" class="btn btn-light btn-action">RESET</button>
 
       <hr />
     </header>
 
     <section>
       <h2>Spring rest only</h2>
-      <div class="processing-area"></div>
+      <div id="spring-rest-only-processing-area" class="processing-area"></div>
 
       <hr />
 
