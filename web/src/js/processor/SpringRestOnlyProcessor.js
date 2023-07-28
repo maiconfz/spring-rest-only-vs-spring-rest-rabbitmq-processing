@@ -3,6 +3,7 @@ import $ from "jquery";
 export class SpringRestOnlyProcessor {
 
     #$squareArea;
+    #squares;
 
     constructor($squareArea) {
         this.#$squareArea = $squareArea;
@@ -11,18 +12,20 @@ export class SpringRestOnlyProcessor {
     process() {
         let $defer = $.Deferred();
 
+        this.#squares = this.#$squareArea.children('.square').get();
+
         console.debug('SpringRestOnlyProcessor start...');
-        this.#processRequest(this.#$squareArea.children('.square').get()).always(() => {
+        this.#processNext().always(() => {
             $defer.resolve();
         });
 
         return $defer.promise();
     }
 
-    #processRequest(requestSquares) {
+    #processNext() {
         let $defer = $.Deferred();
 
-        let requestSquare = requestSquares.shift();
+        let requestSquare = this.#squares.shift();
 
         if (!requestSquare) {
             return $defer.resolve().promise();
@@ -37,7 +40,7 @@ export class SpringRestOnlyProcessor {
         }).fail(() => {
             $requestSquare.removeClass('processing').addClass('fail');
         }).always(() => {
-            this.#processRequest(requestSquares).always(() => {
+            this.#processNext().always(() => {
                 $defer.resolve();
             });
         });;
