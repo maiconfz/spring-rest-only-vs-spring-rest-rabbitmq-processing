@@ -28,14 +28,20 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.data:spring-data-rest-hal-explorer")
+	implementation("com.google.guava:guava:32.1.1-jre")
+
 	compileOnly("org.projectlombok:lombok")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
 	runtimeOnly("com.h2database:h2")
+
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.projectlombok:lombok")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.amqp:spring-rabbit-test")
+	testImplementation("org.springframework.amqp:spring-rabbit-test")	
 }
 
 tasks.withType<Test> {
