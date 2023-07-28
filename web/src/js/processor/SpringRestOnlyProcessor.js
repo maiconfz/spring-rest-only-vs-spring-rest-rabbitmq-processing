@@ -4,9 +4,11 @@ export class SpringRestOnlyProcessor {
 
     #$squareArea;
     #squares;
+    #endpointUrl;
 
-    constructor($squareArea) {
+    constructor($squareArea, endpointUrl) {
         this.#$squareArea = $squareArea;
+        this.#endpointUrl = endpointUrl;
     }
 
     process() {
@@ -35,7 +37,7 @@ export class SpringRestOnlyProcessor {
 
         $requestSquare.addClass('processing');
 
-        $.post('http://localhost:8080/time-registries', () => {
+        $.post(this.#endpointUrl, () => {
             $requestSquare.removeClass('processing').addClass('success');
         }).fail(() => {
             $requestSquare.removeClass('processing').addClass('fail');

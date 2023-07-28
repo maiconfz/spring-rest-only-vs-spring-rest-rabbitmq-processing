@@ -12,8 +12,7 @@ $(() => {
   let inputs = {
     $requestsNumber: $('input#requests-number'),
     $parallelProcessingNumber: $('input#requests-parallel-number'),
-    $endpoint: $('input#requests-endpoint')
-
+    $endpointUrl: $('input#requests-endpoint')
   }
 
   let $processingAreas = $('.processing-area');
@@ -35,8 +34,8 @@ $(() => {
     $('button, input').prop('disabled', true);
     resetSquares();
 
-    new SpringRestOnlyProcessor($('#spring-rest-only-processing-area')).process().always(() => {
-      new SpringRestOnlyParallelProcessor($('#spring-rest-only-parallel-processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val())).process().always(() => {
+    new SpringRestOnlyProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().always(() => {
+      new SpringRestOnlyParallelProcessor($('#spring-rest-only-parallel-processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val()).process().always(() => {
         $('button, input').prop('disabled', false);
       });
     });

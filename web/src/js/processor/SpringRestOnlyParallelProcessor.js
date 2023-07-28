@@ -5,10 +5,12 @@ export class SpringRestOnlyParallelProcessor {
     #$squareArea;
     #squares;
     #parallelProcessingNumber;
+    #endpointUrl;
 
-    constructor($squareArea, parallelProcessingNumber) {
+    constructor($squareArea, parallelProcessingNumber, endpointUrl) {
         this.#$squareArea = $squareArea;
         this.#parallelProcessingNumber = parallelProcessingNumber;
+        this.#endpointUrl = endpointUrl;
     }
 
     process() {
@@ -44,7 +46,7 @@ export class SpringRestOnlyParallelProcessor {
 
         $requestSquare.addClass('processing');
 
-        $.post('http://localhost:8080/time-registries', () => {
+        $.post(this.#endpointUrl, () => {
             $requestSquare.removeClass('processing').addClass('success');
         }).fail(() => {
             $requestSquare.removeClass('processing').addClass('fail');
