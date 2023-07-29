@@ -14,23 +14,17 @@ export class SpringRestOnlyParallelProcessor {
     }
 
     process() {
-        let $defer = $.Deferred();
-
         this.#squares = this.#$squareArea.children('.square').get();
 
         console.debug('SpringRestOnlyParallelProcessor start...');
 
+        let promises = new Array();
+
         for (let i = 0; i < this.#parallelProcessingNumber; i++) {
-            let promises = new Array();
-
             promises.push(this.#processNext());
-
-            $.when(promises).always(() => {
-                $defer.resolve();
-            });
         }
 
-        return $defer.promise();
+        return $.when(...promises).promise();
     }
 
     #processNext() {
