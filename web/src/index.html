@@ -18,7 +18,7 @@
             <label class="form-label" for="requests-number">Number of requests:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-number" class="form-control" type="number" value="80" min="1" />
+            <input id="requests-number" class="form-control" type="number" value="76" min="1" />
           </div>
 
           <div class="col-auto">
@@ -32,7 +32,8 @@
             <label class="form-label" for="requests-endpoint">Endpoint:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-endpoint" class="form-control" type="url" value="http://localhost:8080/api/time-registries" />
+            <input id="requests-endpoint" class="form-control" type="url"
+              value="http://localhost:8080/api/time-registries" />
           </div>
         </div>
       </form>
@@ -44,22 +45,38 @@
       <hr />
     </header>
 
-    <section>
-      <h2>Spring rest only</h2>
-      <div id="spring-rest-only-processing-area" class="processing-area"></div>
+    <section class="container">
+      <h2>Processing area</h2>
+      <div class="row">
+
+        <div class="col">
+          <h3>Spring rest only</h3>
+          <div id="spring-rest-only-processing-area" class="processing-area"></div>
+        </div>
+
+        <div class="col">
+          <h3>Spring rest only + parallel processing</h3>
+          <div id="spring-rest-only-parallel-processing-area" class="processing-area"></div>
+        </div>
+
+      </div>
 
       <hr />
 
-      <h2>Spring rest only + parallel processing</h2>
-      <div id="spring-rest-only-parallel-processing-area" class="processing-area"></div>
+      <div class="row">
 
-      <hr />
-      <h2>Spring rest + rabbitmq</h2>
-      <div class="processing-area"></div>
+        <div class="col">
+          <h3>Spring rest + rabbitmq</h3>
+          <div class="processing-area"></div>
+        </div>
 
-      <hr />
-      <h2>Spring rest + rabbitmq + parallel processing</h2>
-      <div class="processing-area"></div>
+        <div class="col">
+          <h3>Spring rest + rabbitmq + parallel processing</h3>
+          <div class="processing-area"></div>
+        </div>
+
+      </div>
+
     </section>
 
   </div>
