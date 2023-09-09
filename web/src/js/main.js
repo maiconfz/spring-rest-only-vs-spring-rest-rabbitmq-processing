@@ -34,6 +34,13 @@ $(() => {
     $('button, input').prop('disabled', true);
     resetSquares();
 
+    $.post({
+      url: inputs.$endpointUrl.val(),
+      data: JSON.stringify({}),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json'
+    })
+
     new SpringRestOnlyProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().always(() => {
       new SpringRestOnlyParallelProcessor($('#spring-rest-only-parallel-processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val()).process().always(() => {
         $('button, input').prop('disabled', false);
