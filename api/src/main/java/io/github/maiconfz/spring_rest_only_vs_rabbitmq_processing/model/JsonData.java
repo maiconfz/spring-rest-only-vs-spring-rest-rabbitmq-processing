@@ -7,24 +7,29 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "TIME_REGISTRY")
-public class TimeRegistry {
+@Table(name = "JSON_DATA")
+public class JsonData {
     @Id
     @GeneratedValue()
     @Column(name = "ID")
     private UUID id;
 
-    @Column(name = "TIME", nullable = false)
-    private LocalDateTime time;
+    @Column(name = "CREATION_DATE", nullable = false)
+    private LocalDateTime creationDate;
+
+    @Column(name = "DATA", nullable = false)
+    @Lob
+    private String data;
 
     @PrePersist
     void prePersist() {
-        this.time = LocalDateTime.now();
+        this.creationDate = LocalDateTime.now();
     }
 }

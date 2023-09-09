@@ -29,6 +29,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.data:spring-data-rest-hal-explorer")
 	implementation("com.google.guava:guava:32.1.1-jre")
+	implementation("org.tinylog:tinylog-api:2.6.2")
+	implementation("org.tinylog:tinylog-impl:2.6.2")
 
 	compileOnly("org.projectlombok:lombok")
 

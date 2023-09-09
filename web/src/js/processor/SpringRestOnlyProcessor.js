@@ -37,8 +37,14 @@ export class SpringRestOnlyProcessor {
 
         $requestSquare.addClass('processing');
 
-        $.post(this.#endpointUrl, () => {
-            $requestSquare.removeClass('processing').addClass('success');
+        $.post({
+            url: this.#endpointUrl,
+            data: JSON.stringify({ data: JSON.stringify({ storedNumer: Math.floor(Math.random() * 999999999) }) }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: () => {
+                $requestSquare.removeClass('processing').addClass('success');
+            }
         }).fail(() => {
             $requestSquare.removeClass('processing').addClass('fail');
         }).always(() => {
