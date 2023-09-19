@@ -18,7 +18,7 @@
             <label class="form-label" for="requests-number">Number of requests:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-number" class="form-control" type="number" value="76" min="1" />
+            <input id="requests-number" class="form-control" type="number" value="75" min="1" />
           </div>
 
           <div class="col-auto">
@@ -49,14 +49,21 @@
       <h2>Processing area</h2>
       <div class="row">
 
+        <h3>Spring rest only</h3>
+
         <div class="col">
-          <h3>Spring rest only</h3>
+          <h4 class="text-muted">Sequential Processing</h4>
           <div id="spring-rest-only-processing-area" class="processing-area"></div>
         </div>
 
         <div class="col">
-          <h3>Spring rest only + parallel processing</h3>
+          <h4 class="text-muted">Parallel Limited Processing</h4>
           <div id="spring-rest-only-parallel-processing-area" class="processing-area"></div>
+        </div>
+
+        <div class="col">
+          <h4 class="text-muted">Parallel Unlimited Processing</h4>
+          <div id="spring-rest-only-parallel-processing-unlimited-area" class="processing-area"></div>
         </div>
 
       </div>
@@ -64,14 +71,19 @@
       <hr />
 
       <div class="row">
-
+        <h3>Spring rest + rabbitmq</h3>
         <div class="col">
-          <h3>Spring rest + rabbitmq</h3>
+          <h4 class="text-muted">Sequential Processing</h4>
           <div class="processing-area"></div>
         </div>
 
         <div class="col">
-          <h3>Spring rest + rabbitmq + parallel processing</h3>
+          <h4 class="text-muted">Parallel Limited Processing</h4>
+          <div class="processing-area"></div>
+        </div>
+
+        <div class="col">
+          <h4 class="text-muted">Parallel Unlimited Processing</h4>
           <div class="processing-area"></div>
         </div>
 
