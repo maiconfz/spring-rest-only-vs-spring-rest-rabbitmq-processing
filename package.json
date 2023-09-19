@@ -7,6 +7,6 @@
 
   "scripts": {
     "start-api": "./gradlew :api:bootRun",
-    "start-web": "cd web && yarn dev"
+    "start-web": "cd web && npm run dev"
   }
 }
