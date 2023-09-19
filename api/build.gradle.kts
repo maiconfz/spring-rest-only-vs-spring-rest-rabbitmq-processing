@@ -1,7 +1,7 @@
 plugins {
     id("io.maiconfz.spring_rest_only_vs_rabbitmq_processing.java-application-conventions")
     java
-	id("org.springframework.boot") version "3.1.2"
+	id("org.springframework.boot") version "3.1.3"
 	id("io.spring.dependency-management") version "1.1.2"
 }
 
