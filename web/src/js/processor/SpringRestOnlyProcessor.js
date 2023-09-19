@@ -51,7 +51,7 @@ export class SpringRestOnlyProcessor {
             this.#processNext().always(() => {
                 $defer.resolve();
             });
-        });;
+        });
 
         return $defer.promise();
     }
