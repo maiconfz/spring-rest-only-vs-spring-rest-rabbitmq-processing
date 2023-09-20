@@ -54,7 +54,7 @@ export class SpringRestOnlyParallelLimitedProcessor {
             this.#processNext().always(() => {
                 $defer.resolve();
             });
-        });;
+        });
 
         return $defer.promise();
     }
