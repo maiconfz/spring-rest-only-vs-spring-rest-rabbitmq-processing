@@ -4,6 +4,8 @@ import $ from 'jquery';
 import { drawSquare } from './draw-square';
 import { SpringRestOnlyParallelLimitedProcessor } from './processor/SpringRestOnlyParallelLimitedProcessor';
 import { SpringRestOnlyProcessor } from './processor/SpringRestOnlyProcessor';
+import { SpringRestOnlyParallelUnlimitedProcessor } from './processor/SpringRestOnlyParallelUnlimitedProcessor';
+
 
 window.jQuery = window.$ = $;
 
@@ -43,7 +45,9 @@ $(() => {
 
     new SpringRestOnlyProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().always(() => {
       new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val()).process().always(() => {
-        $('button, input').prop('disabled', false);
+        new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val()).process().always(() => {
+          $('button, input').prop('disabled', false);
+        });
       });
     });
   });
