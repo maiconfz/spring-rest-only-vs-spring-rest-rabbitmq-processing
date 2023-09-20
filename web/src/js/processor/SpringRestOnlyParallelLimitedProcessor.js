@@ -1,6 +1,6 @@
 import $ from "jquery";
 
-export class SpringRestOnlyParallelProcessor {
+export class SpringRestOnlyParallelLimitedProcessor {
 
     #$squareArea;
     #squares;
