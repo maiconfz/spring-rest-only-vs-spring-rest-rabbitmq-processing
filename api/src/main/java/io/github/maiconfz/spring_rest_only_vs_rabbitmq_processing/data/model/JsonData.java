@@ -1,4 +1,4 @@
-package io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.model;
+package io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

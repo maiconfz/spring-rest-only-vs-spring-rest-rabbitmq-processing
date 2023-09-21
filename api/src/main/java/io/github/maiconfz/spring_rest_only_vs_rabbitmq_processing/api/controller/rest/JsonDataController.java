@@ -1,8 +1,8 @@
 package io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.controller.rest;
 
-import java.util.Map;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,17 @@ import org.tinylog.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
-import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.model.JsonData;
+import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.JsonData;
+import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.repo.JsonDataRepositoy;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/api/json-data")
 @CrossOrigin(origins = "http://localhost:8081")
+@AllArgsConstructor
 public class JsonDataController {
+
+    private final JsonDataRepositoy jsonDataRepositoy;
 
     @GetMapping(path = "")
     public ResponseEntity<CollectionModel<UUID>> list() {
@@ -31,10 +36,14 @@ public class JsonDataController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<EntityModel<Map<String, UUID>>> create(@RequestBody JsonData jsonData)
+    public ResponseEntity<EntityModel<JsonData>> create(@RequestBody JsonData jsonData)
             throws InterruptedException {
-        // TODO
         Logger.info(jsonData);
-        return ResponseEntity.ok(EntityModel.of(Map.of("id", UUID.randomUUID())));
+        if (jsonData != null && StringUtils.isNotBlank(jsonData.getData())) {
+            final JsonData savedJsonData = this.jsonDataRepositoy.save(jsonData);
+            return ResponseEntity.ok(EntityModel.of(savedJsonData));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
