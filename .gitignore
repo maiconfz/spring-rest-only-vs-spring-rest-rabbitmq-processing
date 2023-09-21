@@ -6,3 +6,5 @@ build
 bin
 node_modules
 .vite
+api/data/h2-db.trace.db
+api/data/h2-db.mv.db
