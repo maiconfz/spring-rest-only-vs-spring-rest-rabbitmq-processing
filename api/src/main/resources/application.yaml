@@ -1,15 +1,12 @@
 spring:
     datasource:
-        url: jdbc:h2:file:./data/h2-db
+        url: postgresql://localhost:5432/sa
         username: sa
         password: sa
-        driverClassName: org.h2.Driver
+        driverClassName: org.postgresql.Driver
     jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
         hibernate:
             ddl-auto: update
         show-sql: true
-    h2:
-        console:
-            enabled: true
 

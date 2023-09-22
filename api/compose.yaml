@@ -5,4 +5,11 @@ services:
       - 'RABBITMQ_DEFAULT_PASS=secret'
       - 'RABBITMQ_DEFAULT_USER=myuser'
     ports:
-      - '5672'
+      - '5672:5672'
+  db:
+    image: 'postgres:16-alpine'
+    environment:
+      - 'POSTGRES_USER=sa'
+      - 'POSTGRES_PASSWORD=sa'
+    ports:
+      - '5432:5432'
