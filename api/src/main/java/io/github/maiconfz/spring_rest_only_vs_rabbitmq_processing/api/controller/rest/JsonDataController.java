@@ -17,6 +17,7 @@ import org.tinylog.Logger;
 import com.google.common.collect.ImmutableSet;
 
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDataDto;
+import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.mapper.JsonDataToJsonDataDtoMapper;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.JsonData;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.repo.JsonDataRepositoy;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,7 @@ import lombok.AllArgsConstructor;
 public class JsonDataController {
 
     private final JsonDataRepositoy jsonDataRepositoy;
+    private final JsonDataToJsonDataDtoMapper jsonDataToJsonDataDtoMapper;
 
     @GetMapping(path = "")
     public ResponseEntity<CollectionModel<UUID>> list() {
@@ -40,7 +42,8 @@ public class JsonDataController {
     public ResponseEntity<EntityModel<JsonDataDto>> create(@RequestBody JsonData jsonData) {
         Logger.info(jsonData);
         if (jsonData != null && StringUtils.isNotBlank(jsonData.getData())) {
-            final JsonDataDto jsonDataDto = new JsonDataDto(this.jsonDataRepositoy.save(jsonData));
+            final JsonDataDto jsonDataDto = jsonDataToJsonDataDtoMapper
+                    .jsonDataToJsonDataDto(this.jsonDataRepositoy.save(jsonData));
             return ResponseEntity.ok(EntityModel.of(jsonDataDto));
         } else {
             return ResponseEntity.badRequest().build();
