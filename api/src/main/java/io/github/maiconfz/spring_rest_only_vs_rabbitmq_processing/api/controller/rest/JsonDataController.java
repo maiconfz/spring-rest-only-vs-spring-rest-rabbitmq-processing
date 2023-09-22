@@ -16,6 +16,7 @@ import org.tinylog.Logger;
 
 import com.google.common.collect.ImmutableSet;
 
+import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDataDto;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.JsonData;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.repo.JsonDataRepositoy;
 import lombok.AllArgsConstructor;
@@ -36,12 +37,11 @@ public class JsonDataController {
     }
 
     @PostMapping(path = "")
-    public ResponseEntity<EntityModel<JsonData>> create(@RequestBody JsonData jsonData)
-            throws InterruptedException {
+    public ResponseEntity<EntityModel<JsonDataDto>> create(@RequestBody JsonData jsonData) {
         Logger.info(jsonData);
         if (jsonData != null && StringUtils.isNotBlank(jsonData.getData())) {
-            final JsonData savedJsonData = this.jsonDataRepositoy.save(jsonData);
-            return ResponseEntity.ok(EntityModel.of(savedJsonData));
+            final JsonDataDto jsonDataDto = new JsonDataDto(this.jsonDataRepositoy.save(jsonData));
+            return ResponseEntity.ok(EntityModel.of(jsonDataDto));
         } else {
             return ResponseEntity.badRequest().build();
         }
