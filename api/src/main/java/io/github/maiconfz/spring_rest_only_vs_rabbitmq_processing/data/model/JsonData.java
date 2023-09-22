@@ -17,7 +17,7 @@ import lombok.Data;
 @Table(name = "JSON_DATA")
 public class JsonData {
     @Id
-    @GeneratedValue()
+    @GeneratedValue
     @Column(name = "ID")
     private UUID id;
 
