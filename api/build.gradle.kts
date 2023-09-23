@@ -1,7 +1,7 @@
 plugins {
     id("io.maiconfz.spring_rest_only_vs_rabbitmq_processing.java-application-conventions")
     java
-	id("org.springframework.boot") version "3.1.3"
+	id("org.springframework.boot") version "3.1.4"
 	id("io.spring.dependency-management") version "1.1.2"
 }
 
@@ -27,7 +27,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.data:spring-data-rest-hal-explorer")
 	
 	implementation("com.google.guava:guava:32.1.1-jre")
 	
@@ -45,6 +44,7 @@ dependencies {
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+	developmentOnly("org.springframework.data:spring-data-rest-hal-explorer")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.projectlombok:lombok")
