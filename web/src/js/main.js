@@ -3,8 +3,8 @@ import '../scss/styles.scss';
 import $ from 'jquery';
 import { drawSquare } from './draw-square';
 import { SpringRestOnlyParallelLimitedProcessor } from './processor/SpringRestOnlyParallelLimitedProcessor';
-import { SpringRestOnlyProcessor } from './processor/SpringRestOnlyProcessor';
 import { SpringRestOnlyParallelUnlimitedProcessor } from './processor/SpringRestOnlyParallelUnlimitedProcessor';
+import { SpringRestOnlySequentialProcessor } from './processor/SpringRestOnlySequentialProcessor';
 
 
 window.jQuery = window.$ = $;
@@ -43,7 +43,7 @@ $(() => {
       dataType: 'json'
     })
 
-    new SpringRestOnlyProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().finally(() => {
+    new SpringRestOnlySequentialProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().finally(() => {
       new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val()).process().always(() => {
         new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val()).process().always(() => {
           $('button, input').prop('disabled', false);
