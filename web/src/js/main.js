@@ -21,12 +21,17 @@ $(() => {
 
     drawSquare($squareAreas, inputs.$requestsNumber.val());
 
-    let resetSquares = () => {
+    let hideTimeSpentText = (hide = true) => {
+      $('.time-spent-text').prop('hidden', hide);
+    }
+
+    let resetProcessingArea = () => {
       $squareAreas.empty();
       drawSquare($squareAreas, inputs.$requestsNumber.val());
+      hideTimeSpentText();
     };
 
-    inputs.$requestsNumber.on('change', resetSquares).on('keyup', resetSquares);
+    inputs.$requestsNumber.on('change', resetProcessingArea).on('keyup', resetProcessingArea);
 
 
     let $btnStart = $('button#btn-start');
@@ -34,7 +39,7 @@ $(() => {
 
     $btnStart.on('click', (event) => {
       $('button, input').prop('disabled', true);
-      resetSquares();
+      resetProcessingArea();
 
       $.post({
         url: inputs.$endpointUrl.val(),
@@ -50,16 +55,19 @@ $(() => {
       springRestOnlySequentialProcessor.process().finally(() => {
 
         console.log(`Time spent on springRestOnlySequentialProcessor: ${springRestOnlySequentialProcessor.timeSpent}s`);
+        springRestOnlySequentialProcessor.$processingArea.find('.time-spent-text').prop('hidden', false);
         springRestOnlySequentialProcessor.$processingArea.find('.time-spent').text(`${springRestOnlySequentialProcessor.timeSpent}s`);
 
         springRestOnlyParallelLimitedProcessor.process().finally(() => {
 
           console.log(`Time spent on springRestOnlyParallelLimitedProcessor: ${springRestOnlyParallelLimitedProcessor.timeSpent}s`);
+          springRestOnlyParallelLimitedProcessor.$processingArea.find('.time-spent-text').prop('hidden', false);
           springRestOnlyParallelLimitedProcessor.$processingArea.find('.time-spent').text(`${springRestOnlyParallelLimitedProcessor.timeSpent}s`);
 
           springRestOnlyParallelUnlimitedProcessor.process().finally(() => {
 
             console.log(`Time spent on springRestOnlyParallelUnlimitedProcessor: ${springRestOnlyParallelUnlimitedProcessor.timeSpent}s`);
+            springRestOnlyParallelUnlimitedProcessor.$processingArea.find('.time-spent-text').prop('hidden', false);
             springRestOnlyParallelUnlimitedProcessor.$processingArea.find('.time-spent').text(`${springRestOnlyParallelUnlimitedProcessor.timeSpent}s`);
 
             $('button, input').prop('disabled', false);
@@ -72,7 +80,7 @@ $(() => {
     });
 
     $btnReset.on('click', () => {
-      resetSquares();
+      resetProcessingArea();
     })
   })();
 });
