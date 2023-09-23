@@ -2,6 +2,7 @@ import $ from "jquery";
 
 export class SpringRestOnlySequentialProcessor {
 
+    $processingArea;
     #$squareArea;
     #squares;
     #endpointUrl;
@@ -10,8 +11,9 @@ export class SpringRestOnlySequentialProcessor {
     endDate;
     timeSpent;
 
-    constructor($squareArea, endpointUrl) {
-        this.#$squareArea = $squareArea;
+    constructor($processingArea, endpointUrl) {
+        this.$processingArea = $processingArea;
+        this.#$squareArea = this.$processingArea.children('.squares');
         this.#endpointUrl = endpointUrl;
     }
 

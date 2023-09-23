@@ -43,9 +43,9 @@ $(() => {
         dataType: 'json'
       })
 
-      let springRestOnlySequentialProcessor = new SpringRestOnlySequentialProcessor($('#spring-rest-only-sequential-processing-area .squares'), inputs.$endpointUrl.val());
-      let springRestOnlyParallelLimitedProcessor = new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area .squares'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val());
-      let springRestOnlyParallelUnlimitedProcessor = new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area .squares'), inputs.$endpointUrl.val());
+      let springRestOnlySequentialProcessor = new SpringRestOnlySequentialProcessor($('#spring-rest-only-sequential-processing-area.processing-area'), inputs.$endpointUrl.val());
+      let springRestOnlyParallelLimitedProcessor = new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area.processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val());
+      let springRestOnlyParallelUnlimitedProcessor = new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area.processing-area'), inputs.$endpointUrl.val());
 
       springRestOnlySequentialProcessor.process().finally(() => {
 

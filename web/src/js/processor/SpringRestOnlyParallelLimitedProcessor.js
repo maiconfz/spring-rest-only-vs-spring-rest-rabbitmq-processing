@@ -2,6 +2,7 @@ import $ from "jquery";
 
 export class SpringRestOnlyParallelLimitedProcessor {
 
+    $processingArea;
     #$squareArea;
     #squares;
     #parallelProcessingNumber;
@@ -11,8 +12,9 @@ export class SpringRestOnlyParallelLimitedProcessor {
     endDate;
     timeSpent;
 
-    constructor($squareArea, parallelProcessingNumber, endpointUrl) {
-        this.#$squareArea = $squareArea;
+    constructor($processingArea, parallelProcessingNumber, endpointUrl) {
+        this.$processingArea = $processingArea;
+        this.#$squareArea = this.$processingArea.children('.squares');
         this.#parallelProcessingNumber = parallelProcessingNumber;
         this.#endpointUrl = endpointUrl;
     }
