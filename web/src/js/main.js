@@ -17,13 +17,13 @@ $(() => {
       $endpointUrl: $('input#requests-endpoint')
     }
 
-    let $processingAreas = $('.processing-area');
+    let $squareAreas = $('.squares');
 
-    drawSquare($processingAreas, inputs.$requestsNumber.val());
+    drawSquare($squareAreas, inputs.$requestsNumber.val());
 
     let resetSquares = () => {
-      $processingAreas.empty();
-      drawSquare($('.processing-area'), inputs.$requestsNumber.val());
+      $squareAreas.empty();
+      drawSquare($squareAreas, inputs.$requestsNumber.val());
     };
 
     inputs.$requestsNumber.on('change', resetSquares).on('keyup', resetSquares);
@@ -43,9 +43,9 @@ $(() => {
         dataType: 'json'
       })
 
-      let springRestOnlySequentialProcessor = new SpringRestOnlySequentialProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val());
-      let springRestOnlyParallelLimitedProcessor = new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val());
-      let springRestOnlyParallelUnlimitedProcessor = new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val());
+      let springRestOnlySequentialProcessor = new SpringRestOnlySequentialProcessor($('#spring-rest-only-sequential-processing-area .squares'), inputs.$endpointUrl.val());
+      let springRestOnlyParallelLimitedProcessor = new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area .squares'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val());
+      let springRestOnlyParallelUnlimitedProcessor = new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area .squares'), inputs.$endpointUrl.val());
 
       springRestOnlySequentialProcessor.process().finally(() => {
 

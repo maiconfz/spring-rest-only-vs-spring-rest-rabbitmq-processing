@@ -32,8 +32,7 @@
             <label class="form-label" for="requests-endpoint">Endpoint:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-endpoint" class="form-control" type="url"
-              value="http://localhost:8080/api/json-data" />
+            <input id="requests-endpoint" class="form-control" type="url" value="http://localhost:8080/api/json-data" />
           </div>
         </div>
       </form>
@@ -47,23 +46,26 @@
 
     <section class="container">
       <h2>Processing area</h2>
-      <div class="row">
 
+      <div class="row">
         <h3>Spring rest only</h3>
 
-        <div class="col">
+        <div id="spring-rest-only-sequential-processing-area" class="col processing-area">
           <h4 class="text-muted">Sequential Processing</h4>
-          <div id="spring-rest-only-processing-area" class="processing-area"></div>
+          <div class="squares"></div>
+          <p class="time-spent-p">Time spent: <span class="time-spent">...</span></p>
         </div>
 
-        <div class="col">
+        <div id="spring-rest-only-parallel-processing-limited-area" class="col processing-area">
           <h4 class="text-muted">Parallel Limited Processing</h4>
-          <div id="spring-rest-only-parallel-processing-limited-area" class="processing-area"></div>
+          <div class="squares"></div>
+          <p class="time-spent-p">Time spent: <span class="time-spent">...</span></p>
         </div>
 
-        <div class="col">
+        <div id="spring-rest-only-parallel-processing-unlimited-area" class="col processing-area">
           <h4 class="text-muted">Parallel Unlimited Processing</h4>
-          <div id="spring-rest-only-parallel-processing-unlimited-area" class="processing-area"></div>
+          <div class="squares"></div>
+          <p class="time-spent-p">Time spent: <span class="time-spent">...</span></p>
         </div>
 
       </div>
@@ -72,19 +74,23 @@
 
       <div class="row">
         <h3>Spring rest + rabbitmq</h3>
-        <div class="col">
+
+        <div class="col processing-area">
           <h4 class="text-muted">Sequential Processing</h4>
-          <div class="processing-area"></div>
+          <div class="squares"></div>
+          <p class="time-spent-p">Time spent: <span class="time-spent">...</span></p>
         </div>
 
-        <div class="col">
+        <div class="col processing-area">
           <h4 class="text-muted">Parallel Limited Processing</h4>
-          <div class="processing-area"></div>
+          <div class="squares"></div>
+          <p class="time-spent-p">Time spent: <span class="time-spent">...</span></p>
         </div>
 
-        <div class="col">
+        <div class="col processing-area">
           <h4 class="text-muted">Parallel Unlimited Processing</h4>
-          <div class="processing-area"></div>
+          <div class="squares"></div>
+          <p class="time-spent-p">Time spent: <span class="time-spent">...</span></p>
         </div>
 
       </div>
