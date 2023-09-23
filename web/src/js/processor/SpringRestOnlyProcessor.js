@@ -11,48 +11,37 @@ export class SpringRestOnlyProcessor {
         this.#endpointUrl = endpointUrl;
     }
 
-    process() {
-        let $defer = $.Deferred();
-
+    async process() {
         this.#squares = this.#$squareArea.children('.square').get();
 
         console.debug('SpringRestOnlyProcessor start...');
-        this.#processNext().always(() => {
-            $defer.resolve();
-        });
-
-        return $defer.promise();
+        return this.#processSquares();
     }
 
-    #processNext() {
-        let $defer = $.Deferred();
+    async #processSquares() {
+        let requestSquare;
 
-        let requestSquare = this.#squares.shift();
+        while (requestSquare = this.#squares.shift()) {
+            console.debug('Processing', requestSquare);
+            let $requestSquare = $(requestSquare);
 
-        if (!requestSquare) {
-            return $defer.resolve().promise();
-        }
+            $requestSquare.addClass('processing');
 
-        let $requestSquare = $(requestSquare);
-
-        $requestSquare.addClass('processing');
-
-        $.post({
-            url: this.#endpointUrl,
-            data: JSON.stringify({ data: JSON.stringify({ storedNumer: Math.floor(Math.random() * 999999999) }) }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: () => {
-                $requestSquare.removeClass('processing').addClass('success');
-            }
-        }).fail(() => {
-            $requestSquare.removeClass('processing').addClass('fail');
-        }).always(() => {
-            this.#processNext().always(() => {
-                $defer.resolve();
+            await new Promise((resolve) => {
+                $.post({
+                    url: this.#endpointUrl,
+                    data: JSON.stringify({ data: JSON.stringify({ storedNumer: Math.floor(Math.random() * 999999999) }) }),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: () => {
+                        $requestSquare.removeClass('processing').addClass('success');
+                    }
+                }).fail(() => {
+                    $requestSquare.removeClass('processing').addClass('fail');
+                }).always(() => {
+                    resolve();
+                });
             });
-        });
-
-        return $defer.promise();
+        }
     }
 }
