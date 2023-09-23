@@ -31,13 +31,6 @@ public class JsonDataController {
     private final JsonDataRepositoy jsonDataRepositoy;
     private final JsonDataToJsonDataDtoMapper jsonDataToJsonDataDtoMapper;
 
-    @GetMapping(path = "")
-    public ResponseEntity<CollectionModel<UUID>> list() {
-        // TODO
-        return ResponseEntity
-                .ok(CollectionModel.of(ImmutableSet.of(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID())));
-    }
-
     @PostMapping(path = "")
     public ResponseEntity<EntityModel<JsonDataDto>> create(@RequestBody JsonData jsonData) {
         Logger.info(jsonData);
