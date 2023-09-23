@@ -10,7 +10,7 @@ export class SpringRestOnlyParallelUnlimitedProcessor {
         this.#endpointUrl = endpointUrl;
     }
 
-    process() {
+    async process() {
         let $squares = this.#$squareArea.children('.square');
 
         console.debug('SpringRestOnlyParallelUnlimitedProcessor start...');
@@ -21,28 +21,26 @@ export class SpringRestOnlyParallelUnlimitedProcessor {
             promises.push(this.#processSquare($(square)));
         });
 
-        return $.when(...promises).promise();
+        await Promise.all(promises);
     }
 
-    #processSquare($square) {
-        let $defer = $.Deferred();
-
+    async #processSquare($square) {
         $square.addClass('processing');
 
-        $.post({
-            url: this.#endpointUrl,
-            data: JSON.stringify({ data: JSON.stringify({ storedNumer: Math.floor(Math.random() * 999999999) }) }),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: () => {
-                $square.removeClass('processing').addClass('success');
-            }
-        }).fail(() => {
-            $square.removeClass('processing').addClass('fail');
-        }).always(() => {
-            $defer.resolve();
-        });
-
-        return $defer.promise();
+        await new Promise((resolve) => {
+            $.post({
+                url: this.#endpointUrl,
+                data: JSON.stringify({ data: JSON.stringify({ storedNumer: Math.floor(Math.random() * 999999999) }) }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: () => {
+                    $square.removeClass('processing').addClass('success');
+                }
+            }).fail(() => {
+                $square.removeClass('processing').addClass('fail');
+            }).always(() => {
+                resolve();
+            });
+        })
     }
 }

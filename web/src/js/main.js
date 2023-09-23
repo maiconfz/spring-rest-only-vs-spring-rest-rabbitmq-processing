@@ -45,7 +45,7 @@ $(() => {
 
     new SpringRestOnlySequentialProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().finally(() => {
       new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val()).process().always(() => {
-        new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val()).process().always(() => {
+        new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val()).process().finally(() => {
           $('button, input').prop('disabled', false);
         });
       });
