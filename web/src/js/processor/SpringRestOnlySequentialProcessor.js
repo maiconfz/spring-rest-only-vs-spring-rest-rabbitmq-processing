@@ -6,16 +6,26 @@ export class SpringRestOnlySequentialProcessor {
     #squares;
     #endpointUrl;
 
+    startDate;
+    endDate;
+    timeSpent;
+
     constructor($squareArea, endpointUrl) {
         this.#$squareArea = $squareArea;
         this.#endpointUrl = endpointUrl;
     }
 
     async process() {
+        this.startDate = new Date();
+
         this.#squares = this.#$squareArea.children('.square').get();
 
         console.debug('SpringRestOnlyProcessor start...');
-        return this.#processSquares();
+
+        await this.#processSquares();
+
+        this.endDate = new Date();
+        this.timeSpent = (this.endDate - this.startDate) / 1000;
     }
 
     async #processSquares() {

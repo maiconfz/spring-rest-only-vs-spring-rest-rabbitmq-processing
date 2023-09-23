@@ -10,51 +10,67 @@ import { SpringRestOnlySequentialProcessor } from './processor/SpringRestOnlySeq
 window.jQuery = window.$ = $;
 
 $(() => {
+  (async () => {
+    let inputs = {
+      $requestsNumber: $('input#requests-number'),
+      $parallelProcessingNumber: $('input#requests-parallel-number'),
+      $endpointUrl: $('input#requests-endpoint')
+    }
 
-  let inputs = {
-    $requestsNumber: $('input#requests-number'),
-    $parallelProcessingNumber: $('input#requests-parallel-number'),
-    $endpointUrl: $('input#requests-endpoint')
-  }
+    let $processingAreas = $('.processing-area');
 
-  let $processingAreas = $('.processing-area');
+    drawSquare($processingAreas, inputs.$requestsNumber.val());
 
-  drawSquare($processingAreas, inputs.$requestsNumber.val());
+    let resetSquares = () => {
+      $processingAreas.empty();
+      drawSquare($('.processing-area'), inputs.$requestsNumber.val());
+    };
 
-  let resetSquares = () => {
-    $processingAreas.empty();
-    drawSquare($('.processing-area'), inputs.$requestsNumber.val());
-  };
-
-  inputs.$requestsNumber.on('change', resetSquares).on('keyup', resetSquares);
+    inputs.$requestsNumber.on('change', resetSquares).on('keyup', resetSquares);
 
 
-  let $btnStart = $('button#btn-start');
-  let $btnReset = $('button#btn-reset');
+    let $btnStart = $('button#btn-start');
+    let $btnReset = $('button#btn-reset');
 
-  $btnStart.on('click', (event) => {
-    $('button, input').prop('disabled', true);
-    resetSquares();
+    $btnStart.on('click', (event) => {
+      $('button, input').prop('disabled', true);
+      resetSquares();
 
-    $.post({
-      url: inputs.$endpointUrl.val(),
-      data: JSON.stringify({}),
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json'
-    })
+      $.post({
+        url: inputs.$endpointUrl.val(),
+        data: JSON.stringify({}),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json'
+      })
 
-    new SpringRestOnlySequentialProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val()).process().finally(() => {
-      new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val()).process().finally(() => {
-        new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val()).process().finally(() => {
-          $('button, input').prop('disabled', false);
+      let springRestOnlySequentialProcessor = new SpringRestOnlySequentialProcessor($('#spring-rest-only-processing-area'), inputs.$endpointUrl.val());
+      let springRestOnlyParallelLimitedProcessor = new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val());
+      let springRestOnlyParallelUnlimitedProcessor = new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area'), inputs.$endpointUrl.val());
+
+      springRestOnlySequentialProcessor.process().finally(() => {
+
+        console.log(`Time spent on springRestOnlySequentialProcessor: ${springRestOnlySequentialProcessor.timeSpent}s`);
+
+        springRestOnlyParallelLimitedProcessor.process().finally(() => {
+
+          console.log(`Time spent on springRestOnlyParallelLimitedProcessor: ${springRestOnlyParallelLimitedProcessor.timeSpent}s`);
+
+          springRestOnlyParallelUnlimitedProcessor.process().finally(() => {
+
+            console.log(`Time spent on springRestOnlyParallelUnlimitedProcessor: ${springRestOnlyParallelUnlimitedProcessor.timeSpent}s`);
+
+            $('button, input').prop('disabled', false);
+          });
+
         });
+
       });
+
     });
-  });
 
-  $btnReset.on('click', () => {
-    resetSquares();
-  })
-
+    $btnReset.on('click', () => {
+      resetSquares();
+    })
+  })();
 });
 

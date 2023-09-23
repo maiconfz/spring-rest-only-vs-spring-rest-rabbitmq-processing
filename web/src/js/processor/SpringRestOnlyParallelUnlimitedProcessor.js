@@ -5,12 +5,18 @@ export class SpringRestOnlyParallelUnlimitedProcessor {
     #$squareArea;
     #endpointUrl;
 
+    startDate;
+    endDate;
+    timeSpent;
+
     constructor($squareArea, endpointUrl) {
         this.#$squareArea = $squareArea;
         this.#endpointUrl = endpointUrl;
     }
 
     async process() {
+        this.startDate = new Date();
+
         let $squares = this.#$squareArea.children('.square');
 
         console.debug('SpringRestOnlyParallelUnlimitedProcessor start...');
@@ -22,6 +28,9 @@ export class SpringRestOnlyParallelUnlimitedProcessor {
         });
 
         await Promise.all(promises);
+
+        this.endDate = new Date();
+        this.timeSpent = (this.endDate - this.startDate) / 1000;
     }
 
     async #processSquare($square) {

@@ -7,6 +7,10 @@ export class SpringRestOnlyParallelLimitedProcessor {
     #parallelProcessingNumber;
     #endpointUrl;
 
+    startDate;
+    endDate;
+    timeSpent;
+
     constructor($squareArea, parallelProcessingNumber, endpointUrl) {
         this.#$squareArea = $squareArea;
         this.#parallelProcessingNumber = parallelProcessingNumber;
@@ -14,6 +18,8 @@ export class SpringRestOnlyParallelLimitedProcessor {
     }
 
     async process() {
+        this.startDate = new Date();
+
         this.#squares = this.#$squareArea.children('.square').get();
 
         console.debug('SpringRestOnlyParallelProcessor start...');
@@ -25,6 +31,9 @@ export class SpringRestOnlyParallelLimitedProcessor {
         }
 
         await Promise.all(promises);
+
+        this.endDate = new Date();
+        this.timeSpent = (this.endDate - this.startDate) / 1000;
     }
 
     async #processNext() {
