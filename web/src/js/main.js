@@ -50,14 +50,17 @@ $(() => {
       springRestOnlySequentialProcessor.process().finally(() => {
 
         console.log(`Time spent on springRestOnlySequentialProcessor: ${springRestOnlySequentialProcessor.timeSpent}s`);
+        springRestOnlySequentialProcessor.$processingArea.find('.time-spent').text(`${springRestOnlySequentialProcessor.timeSpent}s`);
 
         springRestOnlyParallelLimitedProcessor.process().finally(() => {
 
           console.log(`Time spent on springRestOnlyParallelLimitedProcessor: ${springRestOnlyParallelLimitedProcessor.timeSpent}s`);
+          springRestOnlyParallelLimitedProcessor.$processingArea.find('.time-spent').text(`${springRestOnlyParallelLimitedProcessor.timeSpent}s`);
 
           springRestOnlyParallelUnlimitedProcessor.process().finally(() => {
 
             console.log(`Time spent on springRestOnlyParallelUnlimitedProcessor: ${springRestOnlyParallelUnlimitedProcessor.timeSpent}s`);
+            springRestOnlyParallelUnlimitedProcessor.$processingArea.find('.time-spent').text(`${springRestOnlyParallelUnlimitedProcessor.timeSpent}s`);
 
             $('button, input').prop('disabled', false);
           });
