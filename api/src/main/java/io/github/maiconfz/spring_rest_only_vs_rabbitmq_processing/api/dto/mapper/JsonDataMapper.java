@@ -6,6 +6,8 @@ import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDa
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.JsonData;
 
 @Mapper(componentModel = "spring")
-public interface JsonDataToJsonDataDtoMapper {
+public interface JsonDataMapper {
     JsonDataDto jsonDataToJsonDataDto(JsonData jsonData);
+
+    JsonData jsonDataDtoToJsonData(JsonDataDto jsonDataDto);
 }

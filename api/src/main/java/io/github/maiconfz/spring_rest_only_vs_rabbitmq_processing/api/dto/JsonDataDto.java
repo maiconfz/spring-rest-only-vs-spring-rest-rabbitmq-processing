@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class JsonDataDto {
-    private final UUID id;
-    private final LocalDateTime creationDate;
-    private final String data;
+    private UUID id;
+    private LocalDateTime creationDate;
+    private String data;
 }

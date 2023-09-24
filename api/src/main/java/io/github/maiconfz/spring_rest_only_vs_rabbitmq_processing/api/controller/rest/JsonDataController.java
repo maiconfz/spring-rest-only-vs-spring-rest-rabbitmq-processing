@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tinylog.Logger;
 
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDataDto;
-import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.mapper.JsonDataToJsonDataDtoMapper;
-import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.JsonData;
+import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.mapper.JsonDataMapper;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.repo.JsonDataRepositoy;
 import lombok.AllArgsConstructor;
 
@@ -28,35 +27,36 @@ import lombok.AllArgsConstructor;
 public class JsonDataController {
 
     private final JsonDataRepositoy jsonDataRepositoy;
-    private final JsonDataToJsonDataDtoMapper jsonDataToJsonDataDtoMapper;
+    private final JsonDataMapper mapper;
 
     @PostMapping(path = "")
-    public ResponseEntity<EntityModel<JsonDataDto>> create(@RequestBody JsonData jsonData) {
-        Logger.info(jsonData);
-        if (jsonData != null && StringUtils.isNotBlank(jsonData.getData())) {
-            final var jsonDataDto = jsonDataToJsonDataDtoMapper
-                    .jsonDataToJsonDataDto(this.jsonDataRepositoy.save(jsonData));
-            return ResponseEntity.ok(EntityModel.of(jsonDataDto));
+    public ResponseEntity<EntityModel<JsonDataDto>> create(@RequestBody JsonDataDto jsonDataDto) {
+        Logger.info(jsonDataDto);
+        if (jsonDataDto != null && StringUtils.isNotBlank(jsonDataDto.getData())) {
+            final var jsonDataDtoRes = mapper
+                    .jsonDataToJsonDataDto(this.jsonDataRepositoy.save(mapper.jsonDataDtoToJsonData(jsonDataDto)));
+            return ResponseEntity.ok(EntityModel.of(jsonDataDtoRes));
         } else {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping(path = "/add-all")
-    public ResponseEntity<CollectionModel<JsonDataDto>> create(@RequestBody List<JsonData> jsonDataList) {
-        Logger.info(jsonDataList);
-        if (jsonDataList != null && !jsonDataList.isEmpty()) {
-            final List<JsonDataDto> jsonDataListResponse = new ArrayList<>();
+    public ResponseEntity<CollectionModel<JsonDataDto>> create(@RequestBody List<JsonDataDto> jsonDataDtoList) {
+        Logger.info(jsonDataDtoList);
+        if (jsonDataDtoList != null && !jsonDataDtoList.isEmpty()) {
+            final List<JsonDataDto> jsonDataDtoListRes = new ArrayList<>();
 
-            for (var jsonData : jsonDataList) {
-                if (StringUtils.isNotBlank(jsonData.getData())) {
-                    jsonDataListResponse
-                            .add(jsonDataToJsonDataDtoMapper
-                                    .jsonDataToJsonDataDto(this.jsonDataRepositoy.save(jsonData)));
+            for (var jsonDataDto : jsonDataDtoList) {
+                if (StringUtils.isNotBlank(jsonDataDto.getData())) {
+                    jsonDataDtoListRes
+                            .add(mapper
+                                    .jsonDataToJsonDataDto(
+                                            this.jsonDataRepositoy.save(mapper.jsonDataDtoToJsonData(jsonDataDto))));
                 }
             }
 
-            return ResponseEntity.ok(CollectionModel.of(jsonDataListResponse));
+            return ResponseEntity.ok(CollectionModel.of(jsonDataDtoListRes));
         } else {
             return ResponseEntity.badRequest().build();
         }
