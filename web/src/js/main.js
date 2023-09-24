@@ -2,6 +2,7 @@ import '../scss/styles.scss';
 
 import $ from 'jquery';
 import { drawSquare } from './draw-square';
+import { SpringRestOnlyAllInOneProcessor } from './processor/SpringRestOnlyAllInOneProcessor';
 import { SpringRestOnlyParallelLimitedProcessor } from './processor/SpringRestOnlyParallelLimitedProcessor';
 import { SpringRestOnlyParallelUnlimitedProcessor } from './processor/SpringRestOnlyParallelUnlimitedProcessor';
 import { SpringRestOnlySequentialProcessor } from './processor/SpringRestOnlySequentialProcessor';
@@ -51,6 +52,8 @@ $(() => {
       let springRestOnlySequentialProcessor = new SpringRestOnlySequentialProcessor($('#spring-rest-only-sequential-processing-area.processing-area'), inputs.$endpointUrl.val());
       let springRestOnlyParallelLimitedProcessor = new SpringRestOnlyParallelLimitedProcessor($('#spring-rest-only-parallel-processing-limited-area.processing-area'), Number.parseInt(inputs.$parallelProcessingNumber.val()), inputs.$endpointUrl.val());
       let springRestOnlyParallelUnlimitedProcessor = new SpringRestOnlyParallelUnlimitedProcessor($('#spring-rest-only-parallel-processing-unlimited-area.processing-area'), inputs.$endpointUrl.val());
+      let springRestOnlyAllInOneProcessor = new SpringRestOnlyAllInOneProcessor($('#spring-rest-only-all-in-one-area'), `${inputs.$endpointUrl.val()}/add-all`);
+
 
       springRestOnlySequentialProcessor.process().finally(() => {
 
@@ -70,7 +73,16 @@ $(() => {
             springRestOnlyParallelUnlimitedProcessor.$processingArea.find('.time-spent-text').prop('hidden', false);
             springRestOnlyParallelUnlimitedProcessor.$processingArea.find('.time-spent').text(`${springRestOnlyParallelUnlimitedProcessor.timeSpent}s`);
 
-            $('button, input').prop('disabled', false);
+            springRestOnlyAllInOneProcessor.process().finally(() => {
+
+              console.log(`Time spent on springRestOnlyAllInOneProcessor: ${springRestOnlyAllInOneProcessor.timeSpent}s`);
+              springRestOnlyAllInOneProcessor.$processingArea.find('.time-spent-text').prop('hidden', false);
+              springRestOnlyAllInOneProcessor.$processingArea.find('.time-spent').text(`${springRestOnlyAllInOneProcessor.timeSpent}s`);
+
+              $('button, input').prop('disabled', false);
+            });
+
+
           });
 
         });

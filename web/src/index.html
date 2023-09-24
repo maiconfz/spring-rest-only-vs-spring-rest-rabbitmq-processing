@@ -18,7 +18,7 @@
             <label class="form-label" for="requests-number">Number of requests:</label>
           </div>
           <div class="col-auto">
-            <input id="requests-number" class="form-control" type="number" value="75" min="1" />
+            <input id="requests-number" class="form-control" type="number" value="72" min="1" />
           </div>
 
           <div class="col-auto">
@@ -51,19 +51,25 @@
         <h3>Spring rest only</h3>
 
         <div id="spring-rest-only-sequential-processing-area" class="col processing-area">
-          <h4 class="text-muted">Sequential Processing</h4>
+          <h4 class="text-muted">Sequential</h4>
           <div class="squares"></div>
           <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
         </div>
 
         <div id="spring-rest-only-parallel-processing-limited-area" class="col processing-area">
-          <h4 class="text-muted">Parallel Limited Processing</h4>
+          <h4 class="text-muted">Parallel Limited</h4>
           <div class="squares"></div>
           <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
         </div>
 
         <div id="spring-rest-only-parallel-processing-unlimited-area" class="col processing-area">
-          <h4 class="text-muted">Parallel Unlimited Processing</h4>
+          <h4 class="text-muted">Parallel Unlimited</h4>
+          <div class="squares"></div>
+          <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
+        </div>
+
+        <div id="spring-rest-only-all-in-one-area" class="col processing-area">
+          <h4 class="text-muted">All in one request</h4>
           <div class="squares"></div>
           <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
         </div>
@@ -76,19 +82,25 @@
         <h3>Spring rest + rabbitmq</h3>
 
         <div class="col processing-area">
-          <h4 class="text-muted">Sequential Processing</h4>
+          <h4 class="text-muted">Sequential</h4>
           <div class="squares"></div>
           <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
         </div>
 
         <div class="col processing-area">
-          <h4 class="text-muted">Parallel Limited Processing</h4>
+          <h4 class="text-muted">Parallel Limited</h4>
           <div class="squares"></div>
           <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
         </div>
 
         <div class="col processing-area">
-          <h4 class="text-muted">Parallel Unlimited Processing</h4>
+          <h4 class="text-muted">Parallel Unlimited</h4>
+          <div class="squares"></div>
+          <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
+        </div>
+
+        <div class="col processing-area">
+          <h4 class="text-muted">All in one request</h4>
           <div class="squares"></div>
           <p hidden class="time-spent-text">Time spent: <span class="time-spent">...</span></p>
         </div>
