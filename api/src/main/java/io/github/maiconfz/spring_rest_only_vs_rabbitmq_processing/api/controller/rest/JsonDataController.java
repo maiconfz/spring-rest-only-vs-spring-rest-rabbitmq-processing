@@ -1,7 +1,7 @@
 package io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.controller.rest;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.hateoas.CollectionModel;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.tinylog.Logger;
+
+import com.google.common.collect.ImmutableList;
 
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDataModel;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.mapper.JsonDataMapper;
@@ -31,41 +33,36 @@ public class JsonDataController {
     private final JsonDataMapper mapper;
 
     @PostMapping(path = "")
-    public ResponseEntity<EntityModel<JsonDataModel>> create(@RequestBody JsonDataModel jsonDataDto) {
-        Logger.info(jsonDataDto);
-        if (jsonDataDto != null && StringUtils.isNotBlank(jsonDataDto.getData())) {
-            final var jsonDataDtoRes = mapper
-                    .toJsonDataDto(this.jsonDataRepositoy.save(mapper.toJsonData(jsonDataDto)));
+    public ResponseEntity<EntityModel<JsonDataModel>> create(@RequestBody JsonDataModel jsonDataModel) {
+        Logger.info(jsonDataModel);
+        if (jsonDataModel != null && StringUtils.isNotBlank(jsonDataModel.getData())) {
+            final var jsonDataModelRes = mapper
+                    .toJsonDataModel(this.jsonDataRepositoy.save(mapper.toJsonData(jsonDataModel)));
 
-            jsonDataDtoRes.add(WebMvcLinkBuilder.linkTo(getClass()).slash(jsonDataDtoRes.getId()).withSelfRel());
+            jsonDataModelRes.add(WebMvcLinkBuilder.linkTo(getClass()).slash(jsonDataModelRes.getId()).withSelfRel());
 
-            return ResponseEntity.ok(EntityModel.of(jsonDataDtoRes));
+            return ResponseEntity.ok(EntityModel.of(jsonDataModelRes));
         } else {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping(path = "/add-all")
-    public ResponseEntity<CollectionModel<JsonDataModel>> create(@RequestBody List<JsonDataModel> jsonDataDtoList) {
-        Logger.info(jsonDataDtoList);
-        if (jsonDataDtoList != null && !jsonDataDtoList.isEmpty()) {
-            final List<JsonDataModel> jsonDataDtoListRes = new ArrayList<>();
+    public ResponseEntity<CollectionModel<JsonDataModel>> create(@RequestBody List<JsonDataModel> jsonDataModelList) {
+        Logger.info(jsonDataModelList);
+        if (jsonDataModelList != null && !jsonDataModelList.isEmpty()) {
+            final var jsonDataList = jsonDataModelList.parallelStream().map(mapper::toJsonData)
+                    .collect(Collectors.toList());
 
-            for (var jsonDataDto : jsonDataDtoList) {
-                if (StringUtils.isNotBlank(jsonDataDto.getData())) {
-                    final var jsonDataDtoRes = mapper
-                            .toJsonDataDto(
-                                    this.jsonDataRepositoy.save(mapper.toJsonData(jsonDataDto)));
-                    jsonDataDtoRes
-                            .add(WebMvcLinkBuilder.linkTo(getClass()).slash(jsonDataDtoRes.getId()).withSelfRel());
+            final var jsonDataModelListRes = ImmutableList.copyOf(this.jsonDataRepositoy.saveAll(jsonDataList))
+                    .parallelStream().map(jsonData -> {
+                        final var jsonDataModel = mapper.toJsonDataModel(jsonData);
+                        jsonDataModel
+                                .add(WebMvcLinkBuilder.linkTo(getClass()).slash(jsonDataModel.getId()).withSelfRel());
+                        return jsonDataModel;
+                    }).collect(Collectors.toList());
 
-                    jsonDataDtoListRes
-                            .add(jsonDataDtoRes);
-
-                }
-            }
-
-            return ResponseEntity.ok(CollectionModel.of(jsonDataDtoListRes));
+            return ResponseEntity.ok(CollectionModel.of(jsonDataModelListRes));
         } else {
             return ResponseEntity.badRequest().build();
         }

@@ -9,7 +9,7 @@ import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.Jso
 @Mapper(componentModel = "spring")
 public interface JsonDataMapper {
     @Mapping(target = "add", ignore = true)
-    JsonDataModel toJsonDataDto(JsonData jsonData);
+    JsonDataModel toJsonDataModel(JsonData jsonData);
 
     JsonData toJsonData(JsonDataModel jsonDataDto);
 }
