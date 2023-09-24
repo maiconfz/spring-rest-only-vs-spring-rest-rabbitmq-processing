@@ -1,13 +1,15 @@
 package io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDataDto;
+import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.api.dto.JsonDataModel;
 import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.JsonData;
 
 @Mapper(componentModel = "spring")
 public interface JsonDataMapper {
-    JsonDataDto jsonDataToJsonDataDto(JsonData jsonData);
+    @Mapping(target = "add", ignore = true)
+    JsonDataModel toJsonDataDto(JsonData jsonData);
 
-    JsonData jsonDataDtoToJsonData(JsonDataDto jsonDataDto);
+    JsonData toJsonData(JsonDataModel jsonDataDto);
 }
