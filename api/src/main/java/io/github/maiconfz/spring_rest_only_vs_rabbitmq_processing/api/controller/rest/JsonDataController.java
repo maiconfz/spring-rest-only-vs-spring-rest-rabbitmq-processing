@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(path = "/api/json-data", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = { "http://localhost:8081", "http://127.0.0.1:8081", })
 @AllArgsConstructor
 public class JsonDataController {
 
