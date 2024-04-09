@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.tinylog.Logger;
 
 import com.google.common.collect.ImmutableList;
 
@@ -29,15 +30,22 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class JsonDataController {
 
+    private static final Logger logger = LoggerFactory.getLogger(JsonDataController.class);
+
     private final JsonDataRepositoy jsonDataRepositoy;
     private final JsonDataMapper mapper;
 
     @PostMapping(path = "")
     public ResponseEntity<EntityModel<JsonDataModel>> create(@RequestBody JsonDataModel jsonDataModel) {
-        Logger.info(jsonDataModel);
+        logger.info("{}", jsonDataModel);
+
         if (jsonDataModel != null && StringUtils.isNotBlank(jsonDataModel.getData())) {
+            final var jsonData = mapper.toJsonData(jsonDataModel);
+
+            logger.info("{}", jsonData);
+
             final var jsonDataModelRes = mapper
-                    .toJsonDataModel(this.jsonDataRepositoy.save(mapper.toJsonData(jsonDataModel)));
+                    .toJsonDataModel(this.jsonDataRepositoy.save(jsonData));
 
             jsonDataModelRes.add(WebMvcLinkBuilder.linkTo(getClass()).slash(jsonDataModelRes.getId()).withSelfRel());
 
@@ -49,7 +57,8 @@ public class JsonDataController {
 
     @PostMapping(path = "/add-all")
     public ResponseEntity<CollectionModel<JsonDataModel>> create(@RequestBody List<JsonDataModel> jsonDataModelList) {
-        Logger.info(jsonDataModelList);
+        logger.info("{}", jsonDataModelList);
+
         if (jsonDataModelList != null && !jsonDataModelList.isEmpty()) {
             final var jsonDataList = jsonDataModelList.parallelStream().map(mapper::toJsonData)
                     .collect(Collectors.toList());
