@@ -10,7 +10,13 @@ import io.github.maiconfz.spring_rest_only_vs_rabbitmq_processing.data.model.Jso
 public interface JsonDataMapper {
 
     @Mapping(target = "links", ignore = true)
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "creationDate", target = "creationDate")
+    @Mapping(source = "data", target = "data")
     JsonDataModel toJsonDataModel(JsonData jsonData);
 
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "creationDate", target = "creationDate")
+    @Mapping(source = "data", target = "data")
     JsonData toJsonData(JsonDataModel jsonDataDto);
 }
