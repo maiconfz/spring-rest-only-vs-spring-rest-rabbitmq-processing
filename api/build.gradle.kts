@@ -34,9 +34,6 @@ dependencies {
 	
 	implementation("org.apache.commons:commons-lang3:3.17.0")
 	
-	implementation("org.tinylog:tinylog-api:2.7.0")
-	implementation("org.tinylog:tinylog-impl:2.7.0")
-	
 	implementation("org.mapstruct:mapstruct:1.6.3")
 
 	implementation("org.postgresql:postgresql:42.7.4")
